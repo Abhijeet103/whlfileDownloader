@@ -58,6 +58,8 @@ document.getElementById("downloadForm").addEventListener("submit", function(even
     baseUrl = baseUrl.slice(0, -1);
 
     console.log(baseUrl)
+    alert("Your download has started. Please check your downloads folder.");
+
 
     // Fetch the GET API
     fetch(baseUrl)
@@ -76,7 +78,7 @@ document.getElementById("downloadForm").addEventListener("submit", function(even
         a.click();
         window.URL.revokeObjectURL(url);
         // Alert the user that download has started/finished
-        alert("Your download has started. Please check your downloads folder.");
+        alert("download completed");
     })
     .catch(error => console.error('Error:', error));
 });
