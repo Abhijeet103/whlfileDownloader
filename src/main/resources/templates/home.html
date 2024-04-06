@@ -46,7 +46,8 @@ document.getElementById("downloadForm").addEventListener("submit", function(even
     var formData = new FormData(this);
 
     // Construct the base URL
-    var baseUrl = "http://localhost:8080/download?";
+       var baseUrl = "https://whlfiledownloader-1.onrender.com/download?";
+
 
     // Append form data to the base URL
     for (var pair of formData.entries()) {
