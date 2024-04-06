@@ -1,9 +1,11 @@
 package com.whlDownloader.whl;
 
 
+import org.apache.jasper.tagplugins.jstl.core.Url;
 import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,13 +15,16 @@ import java.util.zip.ZipOutputStream;
 @org.springframework.stereotype.Service
 public class Service {
 
-    String downloadDirectory = "downloads";
+    String downloadDirectory = "download";
 
     public byte[] whlfile_downloader(String packageName, boolean deps , String version) throws IOException, InterruptedException {
         download(packageName, deps , version);
-        ZipUtil.pack(new File(downloadDirectory), new File("payload/downloads.zip"));
+        String  payload = "download.zip";
+        ZipUtil.pack(new File(downloadDirectory), new File(payload));
+        byte [] arr =  readFileToByteArray(payload);
 
-        return readFileToByteArray("payload/downloads.zip");
+        System.out.println(arr);
+        return arr;
 
 
     }
