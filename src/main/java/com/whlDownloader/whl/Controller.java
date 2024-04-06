@@ -15,12 +15,17 @@ import java.io.IOException;
 import java.net.URI;
 
 
-@RestController
+@org.springframework.stereotype.Controller
 public class Controller {
 
 
     @Autowired
     Service service;
+
+    @GetMapping("/home")
+    public String myPage() {
+        return "home"; // Without the .html extension
+    }
     @GetMapping("download")
     public ResponseEntity<byte []> download(@RequestParam String packageName , @RequestParam(required = false , defaultValue = "latest") String version ,@RequestParam(required =false ,defaultValue = "false") boolean deps ) throws IOException, InterruptedException {
 

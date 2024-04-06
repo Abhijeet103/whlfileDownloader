@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHL File Downloader</title>
+    <!-- Link to Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <style>
+        .bg-image {
+            background-image: url('images/vecteezy_graphics-design-illustration-digital-circuit-with-binary_7213032.jpg'); /* Path to your collage image */
+            background-size: cover;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen flex justify-center items-center bg-image">
+<div class="bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4">WHL File Downloader</h1>
+    <form id="downloadForm" class="space-y-4">
+        <div>
+            <label for="packageName" class="block font-semibold">Package Name:</label>
+            <input type="text" id="packageName" name="packageName" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div>
+            <label for="version" class="block font-semibold">Version:</label>
+            <input type="text" id="version" name="version" value="latest" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div class="flex items-center">
+            <input type="checkbox" id="deps" name="deps" value="true" class="mr-2">
+            <label for="deps" class="font-semibold">Include Dependencies</label>
+        </div>
+
+        <button type="submit" class="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-300">Download</button>
+    </form>
+</div>
+</body>
+<script>
+    // script.js
+
+document.getElementById("downloadForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+
+    // Construct the base URL
+    var baseUrl = "http://localhost:8080/download?";
+
+    // Append form data to the base URL
+    for (var pair of formData.entries()) {
+        baseUrl += encodeURIComponent(pair[0]) + "=" + encodeURIComponent(pair[1]) + "&";
+    }
+
+    // Remove the last '&' character
+    baseUrl = baseUrl.slice(0, -1);
+
+    console.log(baseUrl)
+
+    // Fetch the GET API
+    fetch(baseUrl)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'downloaded_file.zip';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        // Alert the user that download has started/finished
+        alert("Your download has started. Please check your downloads folder.");
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+</script>
+</html>
