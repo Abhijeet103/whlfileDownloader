@@ -22,7 +22,7 @@ public class Controller {
     @Autowired
     Service service;
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String myPage() {
         return "home"; // Without the .html extension
     }
