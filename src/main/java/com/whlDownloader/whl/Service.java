@@ -15,8 +15,8 @@ public class Service {
 
     String downloadDirectory = "downloads";
 
-    public byte[] whlfile_downloader(String packageName, boolean deps) throws IOException, InterruptedException {
-        download(packageName, deps);
+    public byte[] whlfile_downloader(String packageName, boolean deps , String version) throws IOException, InterruptedException {
+        download(packageName, deps , version);
         ZipUtil.pack(new File(downloadDirectory), new File("payload/downloads.zip"));
 
         return readFileToByteArray("payload/downloads.zip");
@@ -29,7 +29,8 @@ public class Service {
         return Files.readAllBytes(path);
     }
 
-    public void download(String packageName, boolean deps) throws IOException, InterruptedException {
+    public void download(String packageName, boolean deps
+    , String version ) throws IOException, InterruptedException {
         // Delete the directory and its contents if it exists
         File directory = new File(downloadDirectory);
         if (directory.exists()) {
@@ -40,9 +41,14 @@ public class Service {
         directory.mkdirs();
 
         StringBuilder cmd = new StringBuilder("pip download " + packageName);
+        if(!version.equals("latest"))
+        {
+            cmd.append("==").append(version);
+        }
         if (!deps) {
             cmd.append(" --no-deps");
         }
+
         String[] command = cmd.toString().split(" ");
         System.out.println(cmd);
         ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -78,22 +84,4 @@ public class Service {
     }
 
 
-    public static void zipFolder(String sourceFolder, String zipFilePath) throws IOException {
-        Path sourcePath = Paths.get(sourceFolder);
-        try (ZipOutputStream zs = new ZipOutputStream(new FileOutputStream(zipFilePath))) {
-            Files.walk(sourcePath)
-                    .filter(path -> !Files.isDirectory(path))
-                    .forEach(path -> {
-                        ZipEntry zipEntry = new ZipEntry(sourcePath.relativize(path).toString());
-                        try {
-                            zs.putNextEntry(zipEntry);
-                            Files.copy(path, zs);
-                            zs.closeEntry();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-
-    }
 }

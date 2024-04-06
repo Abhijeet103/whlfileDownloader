@@ -22,11 +22,11 @@ public class Controller {
     @Autowired
     Service service;
     @GetMapping("download")
-    public ResponseEntity<byte []> download(@RequestParam String packageName , @RequestParam(required = false) String version ,@RequestParam(required =false ,defaultValue = "false") boolean deps ) throws IOException, InterruptedException {
+    public ResponseEntity<byte []> download(@RequestParam String packageName , @RequestParam(required = false , defaultValue = "latest") String version ,@RequestParam(required =false ,defaultValue = "false") boolean deps ) throws IOException, InterruptedException {
 
         try {
 
-            byte[] zipContents = service.whlfile_downloader(packageName , deps);
+            byte[] zipContents = service.whlfile_downloader(packageName , deps , version);
             // Set response headers
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
