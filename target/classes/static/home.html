@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHL File Downloader</title>
+    <!-- Link to Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Custom styles -->
+    <style>
+        .bg-image {
+            background-image: url('vecteezy_graphics-design-illustration-digital-circuit-with-binary_7213032.jpg'); /* Path to your collage image */
+            background-size: cover;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+    <script src="script.js" defer></script>
+</head>
+<body class="bg-gray-100 h-screen flex justify-center items-center bg-image">
+<div class="bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4">WHL File Downloader</h1>
+    <form id="downloadForm" class="space-y-4">
+        <div>
+            <label for="packageName" class="block font-semibold">Package Name:</label>
+            <input type="text" id="packageName" name="packageName" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div>
+            <label for="version" class="block font-semibold">Version:</label>
+            <input type="text" id="version" name="version" value="latest" class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div class="flex items-center">
+            <input type="checkbox" id="deps" name="deps" value="true" class="mr-2">
+            <label for="deps" class="font-semibold">Include Dependencies</label>
+        </div>
+
+        <button type="submit" class="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-300">Download</button>
+    </form>
+</div>
+</body>
+</html>
