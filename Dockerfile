@@ -3,10 +3,10 @@ FROM ubuntu:latest
 
 # Install JDK (OpenJDK 11) and Python
 RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk python3
+    apt-get install -y openjdk-21-jdk python3
 
 # Set environment variables for Java and Python
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
+ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Create a directory for the Spring Boot application
@@ -19,4 +19,4 @@ COPY  target/whl-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 # Command to run the Spring Boot application
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
